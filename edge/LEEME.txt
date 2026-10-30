@@ -1,0 +1,24 @@
+PAQUETE PARA EDGE-01 (SAAD-Campus)
+Contiene la clave privada y la clave del nodo: no lo subas a la nube ni lo compartas.
+
+Descomprimir TODO dentro de C:\Users\gokux\Projects\saad-campus-edge\
+(junto a edge_db.py, que ya existe). Incluye los modelos de rostro (carpeta models).
+
+PRIMERA VEZ (PowerShell):
+  Set-Location 'C:\Users\gokux\Projects\saad-campus-edge'
+  Set-Location .\edge_app
+  flutter pub get
+  flutter build windows
+  Set-Location ..
+
+USO DIARIO (dos ventanas de PowerShell):
+  Ventana 1 - servicio del nodo (dejar abierta):
+    Set-Location 'C:\Users\gokux\Projects\saad-campus-edge'
+    .\.venv\Scripts\python.exe .\edge_service.py
+  Ventana 2 - pantalla del nodo:
+    & 'C:\Users\gokux\Projects\saad-campus-edge\edge_app\build\windows\x64\runner\Release\saad_edge.exe'
+
+En la pantalla: escribir la clave de la base cifrada -> Desbloquear.
+Enrolar: en el panel central, + Estudiante -> Guardar y enrolar. Aparece solo en el nodo.
+
+No ejecutar edge_api.py al mismo tiempo (usa el mismo puerto 8001).

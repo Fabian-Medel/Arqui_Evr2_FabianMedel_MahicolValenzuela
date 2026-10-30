@@ -1,0 +1,6 @@
+﻿fastapi
+uvicorn[standard]
+opencv-python
+httpx
+numpy
+sqlcipher3==0.6.4

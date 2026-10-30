@@ -1,0 +1,34 @@
+﻿# --- Secretos (NUNCA subir) ---
+.env
+*.env
+!.env.example
+*.key
+*.pem
+*.crt
+*.p12
+*.zip
+edge-01-connection/
+**/certs/
+*-result.json
+
+# --- Datos locales ---
+*.db
+**/data/
+
+# --- Python ---
+.venv/
+.tls-tools/
+__pycache__/
+
+# --- Flutter ---
+build/
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+
+# --- Modelos y video ---
+*.onnx
+*.mp4
+*.mov
+*.mkv
+!00_ENTREGA/*.mp4

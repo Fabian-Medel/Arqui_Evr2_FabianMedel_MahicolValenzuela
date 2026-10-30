@@ -1,0 +1,13 @@
+services:
+  edge_tls:
+    image: nginx:stable-alpine
+    # Sin IP fija: el equipo central cambia de red (Wi-Fi 192.168.1.23, hotspot 172.20.10.6). El acceso exige mTLS.
+    ports:
+      - "8443:8443"
+    volumes:
+      - "./edge-tls/nginx.conf:/etc/nginx/conf.d/default.conf:ro"
+      - "C:/Users/maiqo/.codex/.chatgpt-projects/g-p-6ac4122bfc988191b36a7a3cc5b25401/edge-link/tls/server.crt:/tls/server.crt:ro"
+      - "C:/Users/maiqo/.codex/.chatgpt-projects/g-p-6ac4122bfc988191b36a7a3cc5b25401/edge-link/tls/server.key:/tls/server.key:ro"
+      - "C:/Users/maiqo/.codex/.chatgpt-projects/g-p-6ac4122bfc988191b36a7a3cc5b25401/edge-link/tls/ca.crt:/tls/ca.crt:ro"
+    depends_on:
+      - sync

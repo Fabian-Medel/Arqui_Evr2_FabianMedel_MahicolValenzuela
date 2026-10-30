@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: saad
+      POSTGRES_USER: saad
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?Run setup.ps1}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U saad -d saad"]
+      interval: 5s
+      retries: 20
+  # API central: panel de administracion (RBAC). Solo accesible desde este equipo.
+  api:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    environment: &central_env
+      DATABASE_URL: postgresql://saad:${DB_PASSWORD}@db:5432/saad
+      JWT_SECRET: ${JWT_SECRET}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+    depends_on:
+      db:
+        condition: service_healthy
+  # API sync: nodos perimetrales. Sin puertos publicados; la expone edge_tls (compose.edge.yaml) con mTLS.
+  sync:
+    build: .
+    command: ["uvicorn", "sync_app:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment: *central_env
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  pgdata:
